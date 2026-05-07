@@ -69,6 +69,17 @@ Response:
 }
 ```
 
+### `DELETE /customers/me`
+
+Permanently deletes the authenticated customer's account. Requires the JWT from login.
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" -X DELETE http://localhost:3000/customers/me \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+Returns `204 No Content` on success. The JWT remains cryptographically valid until it expires, but any subsequent request to a protected endpoint will return `404` as the account no longer exists.
+
 ## Error responses
 
 | Scenario | Status |
