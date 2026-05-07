@@ -19,4 +19,17 @@ router.get('/me', authenticate, (req, res) => {
   res.json(customer);
 });
 
+router.delete('/me', authenticate, (req, res) => {
+  const db = getDb();
+  const result = db
+    .prepare('DELETE FROM customers WHERE customerId = ?')
+    .run(req.customer.sub);
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'Customer not found' });
+  }
+
+  res.status(204).send();
+});
+
 module.exports = router;
