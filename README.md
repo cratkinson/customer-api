@@ -110,6 +110,19 @@ Returns `204 No Content` on success. The JWT remains cryptographically valid unt
 | Non-integer input | `400 { "error": "customerId and pin must be integers" }` |
 | > 5 login attempts/min | `429 { "error": "Too many login attempts..." }` |
 
+## Testing
+
+```bash
+npm test
+```
+
+Runs 32 tests with Jest + supertest against an in-memory SQLite database — no `.env` or running server required. The test suite covers:
+
+- `POST /auth/login` — valid login, wrong PIN, unknown customer, integer validation, malformed JSON
+- `GET /customers/me` — auth, profile shape, expired/tampered tokens
+- `PUT /customers/me` — field updates, whitespace trimming, validation
+- `DELETE /customers/me` — successful deletion and cascading 404s
+
 ## Development
 
 ```bash
