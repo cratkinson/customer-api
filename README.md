@@ -69,6 +69,27 @@ Response:
 }
 ```
 
+### `PUT /customers/me`
+
+Updates the authenticated customer's `name` and/or `email`. At least one field must be provided.
+
+```bash
+curl -s -X PUT http://localhost:3000/customers/me \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"name": "Alice Tran", "email": "alice.tran@example.com"}'
+```
+
+Response:
+```json
+{
+  "customerId": 1001,
+  "name": "Alice Tran",
+  "email": "alice.tran@example.com",
+  "created_at": "2026-01-01 00:00:00"
+}
+```
+
 ### `DELETE /customers/me`
 
 Permanently deletes the authenticated customer's account. Requires the JWT from login.
