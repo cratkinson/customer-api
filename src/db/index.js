@@ -8,8 +8,12 @@ const config = require('../config');
 let db;
 
 function initDb() {
-  const dbPath = path.resolve(config.dbPath);
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  const isMemory = config.dbPath === ':memory:';
+  const dbPath = isMemory ? ':memory:' : path.resolve(config.dbPath);
+
+  if (!isMemory) {
+    fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  }
 
   db = new Database(dbPath);
   db.pragma('journal_mode = WAL');

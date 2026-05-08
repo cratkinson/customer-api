@@ -15,6 +15,7 @@ const loginLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many login attempts — try again in a minute' },
+  skip: () => process.env.NODE_ENV === 'test',
 });
 
 function isValidPin(value) {
